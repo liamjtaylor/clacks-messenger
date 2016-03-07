@@ -20,7 +20,8 @@
   (let [character (str letter)]
   (alphabet (keyword character))))
 
-(defn back-to-letter [x] (name ((reverse-map alphabet) x)))
+(defn back-to-letter [clack]
+  (name ((reverse-map alphabet) clack)))
 
 (defn string->clacks [word]
   (->> word
@@ -33,8 +34,9 @@
        (reduce str)
        de-kebabify))
 
+(string->clacks "bt bt.")
+
 (def returned (string->clacks "bt bt."))
 
 (clacks->string returned)
 
-(string->clacks " bt.")
