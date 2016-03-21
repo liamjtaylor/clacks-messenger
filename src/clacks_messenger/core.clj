@@ -1,5 +1,6 @@
 (ns clacks-messenger.core
-  (require [clacks-messenger.clacks-mapping :as clack-map]))
+  (require [clacks-messenger.clacks-mapping :as clack-map])
+  (:gen-class))
 
 (defn build-state [word]
     {:original-message    [word]
@@ -9,20 +10,23 @@
      :third-tower         []
      :received-message    []})
 
-(defn sending-message [{:keys [received-message first-tower second-tower third-tower to-be-sent original-message] :as state} n]
+(defn sending-message [{:keys [received-message first-tower second-tower third-tower to-be-sent original-message] :as state}]
   (let [received-message      (if-not (empty? third-tower) (conj received-message third-tower) received-message)
-        third-tower           second-tower
-        second-tower          first-tower
-        first-tower           (first to-be-sent)
-        to-be-sent            (rest to-be-sent)
+        third-tower           (if-not (empty? second-tower) second-tower [])
+        second-tower          (if-not (empty? first-tower) first-tower [])
+        first-tower           (if-not (empty? to-be-sent) (first to-be-sent) [])
+        to-be-sent            (if-not (empty? to-be-sent) (rest to-be-sent) [])
         new-state             {:original-message    original-message
                                :to-be-sent          to-be-sent
                                :first-tower         first-tower
                                :second-tower        second-tower
                                :third-tower         third-tower
                                :received-message    received-message}]
-        (if (= n 0)
+        (if (and (empty? third-tower) (empty? to-be-sent))
           new-state
-          (sending-message new-state (dec n)))))
+          (do
+            new-state
+            (sending-message new-state)))))
 
-(sending-message (build-state "test") 4)
+(defn -main [arg *command-line-args*]
+  (sending-message (build-state arg)))
