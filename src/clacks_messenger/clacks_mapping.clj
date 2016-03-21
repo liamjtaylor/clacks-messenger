@@ -13,7 +13,7 @@
 
 (defn clacksify [letter]
   (let [character (str letter)]
-  (alph-map/alphabet (keyword character))))
+  (alph-map/alphabet character)))
 
 (defn back-to-letter [clack]
   (name ((reverse-map alph-map/alphabet) clack)))

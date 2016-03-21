@@ -23,10 +23,11 @@
                                :third-tower         third-tower
                                :received-message    received-message}]
         (if (and (empty? third-tower) (empty? to-be-sent))
-          new-state
+          (println new-state)
           (do
-            new-state
+            (println new-state)
             (sending-message new-state)))))
 
-(defn -main [arg *command-line-args*]
-  (sending-message (build-state arg)))
+(defn -main [*command-line-args*]
+  (prn *command-line-args*)
+  (sending-message (build-state *command-line-args*)))
