@@ -27,6 +27,7 @@
           (println new-state)
           (do
             (println new-state)
+            (Thread/sleep 1000)
             (sending-message new-state)))))
 
 (defn -main [*command-line-args*]
