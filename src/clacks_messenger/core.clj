@@ -11,7 +11,8 @@
      :received-message    []})
 
 (defn sending-message [{:keys [received-message first-tower second-tower third-tower to-be-sent original-message] :as state}]
-  (let [received-message      (if-not (empty? third-tower) (conj received-message third-tower) received-message)
+  (let [clack-received        (if-not (empty? third-tower) (conj () third-tower) [])
+        received-message      (if-not (empty? third-tower) (conj received-message (clack-map/clacks->string clack-received)) received-message)
         third-tower           (if-not (empty? second-tower) second-tower [])
         second-tower          (if-not (empty? first-tower) first-tower [])
         first-tower           (if-not (empty? to-be-sent) (first to-be-sent) [])
@@ -31,3 +32,4 @@
 (defn -main [*command-line-args*]
   (prn *command-line-args*)
   (sending-message (build-state *command-line-args*)))
+

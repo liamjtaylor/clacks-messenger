@@ -28,10 +28,3 @@
        (map back-to-letter)
        (reduce str)
        de-kebabify))
-
-(string->clacks "Hello this is the message!!!")
-
-(def returned (string->clacks "Hello @£%&^<> this is the message!!??!??!?"))
-
-(clacks->string returned)
-
