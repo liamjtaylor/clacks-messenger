@@ -25,10 +25,10 @@
                                :third-tower         third-tower
                                :received-message    received-message}]
         (if (and (empty? third-tower) (empty? to-be-sent))
-          (pp/pprint new-state)
+          (pp/pprint (reduce str (:received-message new-state)))
           (do
-            (pp/pprint new-state)
-            (Thread/sleep 1000)
+            (pp/pprint (select-keys new-state [:first-tower :second-tower :third-tower]))
+            (Thread/sleep 10)
             (sending-message new-state)))))
 
 (defn -main [*command-line-args*]
