@@ -1,5 +1,6 @@
 (ns clacks-messenger.core
-  (require [clacks-messenger.clacks-mapping :as clack-map])
+  (require [clacks-messenger.clacks-mapping :as clack-map]
+           [clojure.pprint :as pp])
   (:gen-class))
 
 (defn build-state [word]
@@ -24,9 +25,9 @@
                                :third-tower         third-tower
                                :received-message    received-message}]
         (if (and (empty? third-tower) (empty? to-be-sent))
-          (println new-state)
+          (pp/pprint new-state)
           (do
-            (println new-state)
+            (pp/pprint new-state)
             (Thread/sleep 1000)
             (sending-message new-state)))))
 
